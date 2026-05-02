@@ -3,6 +3,7 @@
   "scopeName": "source.keel",
   "patterns": [
     { "include": "#comments" },
+    { "include": "#triple-strings" },
     { "include": "#strings" },
     { "include": "#duration-literals" },
     { "include": "#numbers" },
@@ -12,7 +13,10 @@
     { "include": "#keywords-other" },
     { "include": "#constants" },
     { "include": "#prelude-namespaces" },
+    { "include": "#function-calls" },
     { "include": "#type-names" },
+    { "include": "#operators" },
+    { "include": "#punctuation" },
     { "include": "#identifiers" }
   ],
   "repository": {
@@ -20,22 +24,23 @@
       "name": "comment.line.number-sign.keel",
       "match": "#.*$"
     },
-    "strings": {
-      "name": "string.quoted.double.keel",
+    "triple-strings": {
+      "name": "string.quoted.triple.keel",
       "begin": "\"\"\"",
       "end": "\"\"\"",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.keel" } },
+      "endCaptures":   { "0": { "name": "punctuation.definition.string.end.keel" } },
       "patterns": [
         { "include": "#string-escape" },
         { "include": "#string-interpolation" }
-      ],
-      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.keel" } },
-      "endCaptures":   { "0": { "name": "punctuation.definition.string.end.keel" } },
-      "contentName": "string.quoted.triple.keel"
+      ]
     },
-    "string-single": {
+    "strings": {
       "name": "string.quoted.double.keel",
       "begin": "\"",
       "end": "\"",
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.keel" } },
+      "endCaptures":   { "0": { "name": "punctuation.definition.string.end.keel" } },
       "patterns": [
         { "include": "#string-escape" },
         { "include": "#string-interpolation" }
@@ -43,7 +48,7 @@
     },
     "string-escape": {
       "name": "constant.character.escape.keel",
-      "match": "\\\\[ntr\\\\\"{}]"
+      "match": "\\\\(?:[ntrfbv0\\\\\"{}]|u[0-9a-fA-F]{4})"
     },
     "string-interpolation": {
       "name": "meta.interpolation.keel",
@@ -98,12 +103,12 @@
       ]
     },
     "prelude-namespaces": {
-      "patterns": [
-        {
-          "name": "support.class.keel",
-          "match": "\\b(Ai|Io|Schedule|Email|Http|File|Json|Env|Log|Agent|Memory|Control|Async|Search|Db|Time|Cache|Str)\\b(?=\\.)"
-        }
-      ]
+      "name": "support.class.keel",
+      "match": "\\b(Ai|Io|Schedule|Email|Http|File|Json|Env|Log|Agent|Memory|Control|Async|Search|Db|Time|Cache|Str)\\b(?=\\.)"
+    },
+    "function-calls": {
+      "name": "entity.name.function.keel",
+      "match": "\\b([a-z_][a-zA-Z0-9_]*)\\s*(?=\\()"
     },
     "type-names": {
       "patterns": [
@@ -114,6 +119,30 @@
         {
           "name": "entity.name.type.keel",
           "match": "\\b[A-Z][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.keel",
+          "match": "=>|->|\\|>|==|!=|<=|>=|\\?\\?|\\?\\.|!\\."
+        },
+        {
+          "name": "keyword.operator.keel",
+          "match": "[+\\-*/%<>=!?|]"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.separator.keel",
+          "match": "[,;]"
+        },
+        {
+          "name": "punctuation.separator.key-value.keel",
+          "match": ":"
         }
       ]
     },

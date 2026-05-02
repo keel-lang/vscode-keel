@@ -18,7 +18,15 @@
     "vscode": "^1.80.0"
   },
   "categories": ["Programming Languages"],
-  "keywords": ["keel", "ai", "agents", "llm"],
+  "keywords": [
+    "keel", "ai", "agents", "llm", "language", "syntax",
+    "language-server", "lsp", "intellisense", "snippets",
+    "ai-agents", "syntax-highlighting", "programming-language"
+  ],
+  "galleryBanner": {
+    "color": "#1a1a2e",
+    "theme": "dark"
+  },
   "activationEvents": [
     "onLanguage:keel"
   ],

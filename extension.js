@@ -43,6 +43,14 @@ function runKeelCommand(subcommand) {
 
   proc.stdout.on('data', (d) => channel.append(d.toString()));
   proc.stderr.on('data', (d) => channel.append(d.toString()));
+  proc.on('error', (err) => {
+    channel.appendLine(`✗ failed to start: ${err.message}`);
+    if (err.code === 'ENOENT') {
+      vscode.window.showErrorMessage(
+        `keel binary not found at "${keel}". Set keel.executablePath in settings.`,
+      );
+    }
+  });
   proc.on('close', (code) => {
     channel.appendLine(code === 0 ? `✓ ${subcommand} succeeded` : `✗ ${subcommand} exited ${code}`);
   });
@@ -56,9 +64,15 @@ function formatCurrentFile() {
   const keel = getKeelPath();
 
   const cp = require('child_process');
-  cp.exec(`${keel} fmt ${file}`, (err, _stdout, stderr) => {
-    if (err) {
-      vscode.window.showErrorMessage(`keel fmt failed: ${stderr}`);
+  const proc = cp.spawn(keel, ['fmt', file], { env: process.env });
+
+  proc.on('error', (err) => {
+    if (err.code === 'ENOENT') {
+      vscode.window.showErrorMessage(
+        `keel binary not found at "${keel}". Set keel.executablePath in settings.`,
+      );
+    } else {
+      vscode.window.showErrorMessage(`keel fmt failed: ${err.message}`);
     }
   });
 }
@@ -75,14 +89,28 @@ function startLspClient(context) {
   const clientOptions = {
     documentSelector: [{ scheme: 'file', language: 'keel' }],
     synchronize: {
+      configurationSection: 'keel',
       fileEvents: vscode.workspace.createFileSystemWatcher('**/*.keel'),
     },
     traceOutputChannel: vscode.window.createOutputChannel('Keel LSP Trace'),
   };
 
   client = new LanguageClient('keel', 'Keel Language Server', serverOptions, clientOptions);
+
+  client.onDidChangeState((event) => {
+    if (event.newState === 1 /* stopped */ && event.oldState === 2 /* running */) {
+      vscode.window.showWarningMessage('Keel Language Server stopped unexpectedly.');
+    }
+  });
+
   context.subscriptions.push(client);
-  client.start();
+  client.start().catch((err) => {
+    if (err?.code === 'ENOENT') {
+      vscode.window.showWarningMessage(
+        `Keel LSP: binary not found at "${keel}". Set keel.executablePath to enable diagnostics.`,
+      );
+    }
+  });
 }
 
 function getOrCreateChannel() {
@@ -93,7 +121,7 @@ function getOrCreateChannel() {
 }
 
 function deactivate() {
-  if (client) return client.stop();
+  return client?.stop();
 }
 
 module.exports = { activate, deactivate };
