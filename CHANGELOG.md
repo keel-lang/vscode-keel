@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.1.9] — 2026-05-02
+## [0.1.0] — 2026-05-02
 
 Initial release extracted from the main `keel-lang/keel` repository.
 
