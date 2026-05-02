@@ -1,0 +1,125 @@
+{
+  "name": "Keel",
+  "scopeName": "source.keel",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#duration-literals" },
+    { "include": "#numbers" },
+    { "include": "#attributes" },
+    { "include": "#keywords-declaration" },
+    { "include": "#keywords-control" },
+    { "include": "#keywords-other" },
+    { "include": "#constants" },
+    { "include": "#prelude-namespaces" },
+    { "include": "#type-names" },
+    { "include": "#identifiers" }
+  ],
+  "repository": {
+    "comments": {
+      "name": "comment.line.number-sign.keel",
+      "match": "#.*$"
+    },
+    "strings": {
+      "name": "string.quoted.double.keel",
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+      "patterns": [
+        { "include": "#string-escape" },
+        { "include": "#string-interpolation" }
+      ],
+      "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.keel" } },
+      "endCaptures":   { "0": { "name": "punctuation.definition.string.end.keel" } },
+      "contentName": "string.quoted.triple.keel"
+    },
+    "string-single": {
+      "name": "string.quoted.double.keel",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        { "include": "#string-escape" },
+        { "include": "#string-interpolation" }
+      ]
+    },
+    "string-escape": {
+      "name": "constant.character.escape.keel",
+      "match": "\\\\[ntr\\\\\"{}]"
+    },
+    "string-interpolation": {
+      "name": "meta.interpolation.keel",
+      "begin": "\\{",
+      "end": "\\}",
+      "beginCaptures": { "0": { "name": "punctuation.definition.interpolation.begin.keel" } },
+      "endCaptures":   { "0": { "name": "punctuation.definition.interpolation.end.keel" } },
+      "patterns": [{ "include": "source.keel" }]
+    },
+    "duration-literals": {
+      "name": "constant.numeric.duration.keel",
+      "match": "\\b([0-9]+)\\.(seconds|minutes|hours|days|weeks)\\b"
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.keel",
+          "match": "\\b[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.keel",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    "attributes": {
+      "name": "entity.other.attribute-name.keel",
+      "match": "@[a-zA-Z_][a-zA-Z0-9_]*"
+    },
+    "keywords-declaration": {
+      "name": "keyword.declaration.keel",
+      "match": "\\b(agent|task|interface|type|extern|use|from|state|on|set)\\b"
+    },
+    "keywords-control": {
+      "name": "keyword.control.keel",
+      "match": "\\b(if|else|when|where|for|in|try|catch|return)\\b"
+    },
+    "keywords-other": {
+      "name": "keyword.other.keel",
+      "match": "\\b(as|and|or|not)\\b"
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.keel",
+          "match": "\\b(true|false|none|now)\\b"
+        },
+        {
+          "name": "variable.language.keel",
+          "match": "\\bself\\b"
+        }
+      ]
+    },
+    "prelude-namespaces": {
+      "patterns": [
+        {
+          "name": "support.class.keel",
+          "match": "\\b(Ai|Io|Schedule|Email|Http|File|Json|Env|Log|Agent|Memory|Control|Async|Search|Db|Time|Cache|Str)\\b(?=\\.)"
+        }
+      ]
+    },
+    "type-names": {
+      "patterns": [
+        {
+          "name": "storage.type.builtin.keel",
+          "match": "\\b(str|int|float|bool|duration|datetime|dynamic)\\b"
+        },
+        {
+          "name": "entity.name.type.keel",
+          "match": "\\b[A-Z][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "identifiers": {
+      "name": "variable.other.keel",
+      "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+    }
+  }
+}

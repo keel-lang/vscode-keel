@@ -1,0 +1,106 @@
+{
+  "name": "keel-lang",
+  "displayName": "Keel Language",
+  "description": "Syntax highlighting, snippets, and language server support for Keel — AI agents as first-class citizens",
+  "version": "0.1.9",
+  "publisher": "keel-lang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keel-lang/vscode-keel"
+  },
+  "homepage": "https://keel-lang.dev",
+  "bugs": {
+    "url": "https://github.com/keel-lang/vscode-keel/issues"
+  },
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Programming Languages"],
+  "keywords": ["keel", "ai", "agents", "llm"],
+  "activationEvents": [
+    "onLanguage:keel"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "keel",
+        "aliases": ["Keel", "keel"],
+        "extensions": [".keel"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "keel",
+        "scopeName": "source.keel",
+        "path": "./syntaxes/keel.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "keel",
+        "path": "./snippets/keel.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "keel.runFile",
+        "title": "Keel: Run File"
+      },
+      {
+        "command": "keel.checkFile",
+        "title": "Keel: Check File"
+      },
+      {
+        "command": "keel.lintFile",
+        "title": "Keel: Lint File"
+      },
+      {
+        "command": "keel.formatFile",
+        "title": "Keel: Format File"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "keel.runFile",
+          "when": "resourceLangId == keel"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Keel",
+      "properties": {
+        "keel.executablePath": {
+          "type": "string",
+          "default": "keel",
+          "description": "Path to the keel binary."
+        },
+        "keel.lsp.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the Keel language server (diagnostics, go-to-definition, rename)."
+        },
+        "keel.trace.server": {
+          "type": "string",
+          "enum": ["off", "messages", "verbose"],
+          "default": "off",
+          "description": "Trace LSP communication in the Output panel."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^2.24.0"
+  },
+  "scripts": {
+    "package": "vsce package",
+    "publish": "vsce publish"
+  }
+}

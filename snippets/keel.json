@@ -1,0 +1,183 @@
+{
+  "Agent": {
+    "prefix": "agent",
+    "body": [
+      "agent ${1:Name} {",
+      "  @on_start {",
+      "    $0",
+      "  }",
+      "}",
+      "",
+      "run(${1:Name})"
+    ],
+    "description": "Declare an agent"
+  },
+  "Agent with state": {
+    "prefix": "agents",
+    "body": [
+      "agent ${1:Name} {",
+      "  state {",
+      "    ${2:field}: ${3:int} = ${4:0}",
+      "  }",
+      "",
+      "  @on_start {",
+      "    $0",
+      "  }",
+      "}",
+      "",
+      "run(${1:Name})"
+    ],
+    "description": "Declare an agent with state"
+  },
+  "Agent with role and model": {
+    "prefix": "agentr",
+    "body": [
+      "agent ${1:Name} {",
+      "  @role \"${2:You are a helpful assistant}\"",
+      "  @model \"${3:smart}\"",
+      "",
+      "  @on_start {",
+      "    $0",
+      "  }",
+      "}",
+      "",
+      "run(${1:Name})"
+    ],
+    "description": "Declare an agent with role and model"
+  },
+  "Task": {
+    "prefix": "task",
+    "body": [
+      "task ${1:name}(${2:param}: ${3:str}) -> ${4:str} {",
+      "  $0",
+      "}"
+    ],
+    "description": "Declare a task"
+  },
+  "Type (enum)": {
+    "prefix": "type",
+    "body": [
+      "type ${1:Name} = ${2:VariantA} | ${3:VariantB}"
+    ],
+    "description": "Declare an enum type"
+  },
+  "Type (struct)": {
+    "prefix": "types",
+    "body": [
+      "type ${1:Name} {",
+      "  ${2:field}: ${3:str}",
+      "}"
+    ],
+    "description": "Declare a struct type"
+  },
+  "Interface": {
+    "prefix": "interface",
+    "body": [
+      "interface ${1:Name} {",
+      "  task ${2:method}(${3:param}: ${4:str}) -> ${5:str}",
+      "}"
+    ],
+    "description": "Declare an interface"
+  },
+  "@on_start": {
+    "prefix": "on_start",
+    "body": [
+      "@on_start {",
+      "  $0",
+      "}"
+    ],
+    "description": "on_start lifecycle handler"
+  },
+  "@on_stop": {
+    "prefix": "on_stop",
+    "body": [
+      "@on_stop {",
+      "  $0",
+      "}"
+    ],
+    "description": "on_stop lifecycle handler"
+  },
+  "on event handler": {
+    "prefix": "on",
+    "body": [
+      "on ${1:event}(${2:msg}: ${3:str}) {",
+      "  $0",
+      "}"
+    ],
+    "description": "Declare an event handler"
+  },
+  "when expression": {
+    "prefix": "when",
+    "body": [
+      "when ${1:value} {",
+      "  ${2:VariantA} => $3",
+      "  ${4:VariantB} => $5",
+      "  _ => $0",
+      "}"
+    ],
+    "description": "Pattern match with when"
+  },
+  "if/else": {
+    "prefix": "if",
+    "body": [
+      "if ${1:condition} {",
+      "  $2",
+      "} else {",
+      "  $0",
+      "}"
+    ],
+    "description": "if/else block"
+  },
+  "for loop": {
+    "prefix": "for",
+    "body": [
+      "for ${1:item} in ${2:list} {",
+      "  $0",
+      "}"
+    ],
+    "description": "for loop"
+  },
+  "try/catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "  $1",
+      "} catch ${2:err}: ${3:Error} {",
+      "  $0",
+      "}"
+    ],
+    "description": "try/catch block"
+  },
+  "Ai.classify": {
+    "prefix": "classify",
+    "body": [
+      "${1:result} = Ai.classify(${2:input}, as: ${3:Type})"
+    ],
+    "description": "Classify a value into an enum type"
+  },
+  "Ai.summarize": {
+    "prefix": "summarize",
+    "body": [
+      "${1:summary} = Ai.summarize(${2:text})"
+    ],
+    "description": "Summarize text with the LLM"
+  },
+  "Schedule.every": {
+    "prefix": "every",
+    "body": [
+      "Schedule.every(${1:1}.${2:hours}, () => {",
+      "  $0",
+      "})"
+    ],
+    "description": "Recurring schedule"
+  },
+  "Schedule.cron": {
+    "prefix": "cron",
+    "body": [
+      "Schedule.cron(\"${1:0 9 * * 1-5}\", () => {",
+      "  $0",
+      "})"
+    ],
+    "description": "Cron schedule"
+  }
+}
