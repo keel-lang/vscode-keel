@@ -84,7 +84,7 @@
     },
     "keywords-control": {
       "name": "keyword.control.keel",
-      "match": "\\b(if|else|when|where|for|in|try|catch|return)\\b"
+      "match": "\\b(if|else|when|where|for|in|try|catch|return|raise|break|continue)\\b"
     },
     "keywords-other": {
       "name": "keyword.other.keel",
@@ -126,7 +126,7 @@
       "patterns": [
         {
           "name": "keyword.operator.keel",
-          "match": "=>|->|\\|>|==|!=|<=|>=|\\?\\?|\\?\\.|!\\."
+          "match": "=>|->|\\|>|==|!=|<=|>=|\\?\\?|\\?\\.|!\\.|\\+=|-=|\\*=|/=|%=|\\.\\."
         },
         {
           "name": "keyword.operator.keel",
