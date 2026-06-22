@@ -2,7 +2,7 @@
   "name": "keel-lang",
   "displayName": "Keel Language",
   "description": "Syntax highlighting, snippets, and language server support for Keel — AI agents as first-class citizens",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "keel-lang",
   "license": "MIT",
   "repository": {

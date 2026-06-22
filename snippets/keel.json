@@ -29,12 +29,13 @@
     ],
     "description": "Declare an agent with state"
   },
-  "Agent with role and model": {
+  "Agent with role, provider and model": {
     "prefix": "agentr",
     "body": [
       "agent ${1:Name} {",
       "  @role \"${2:You are a helpful assistant}\"",
-      "  @model \"${3:smart}\"",
+      "  @provider ${3|ollama,openai,anthropic|}",
+      "  @model \"${4:llama3}\"",
       "",
       "  @on_start {",
       "    $0",
@@ -43,7 +44,7 @@
       "",
       "run(${1:Name})"
     ],
-    "description": "Declare an agent with role and model"
+    "description": "Declare an agent with role, provider and model"
   },
   "Task": {
     "prefix": "task",
@@ -148,37 +149,86 @@
     ],
     "description": "try/catch block"
   },
-  "Ai.classify": {
+  "ai.classify": {
     "prefix": "classify",
     "body": [
-      "${1:result} = Ai.classify(${2:input}, as: ${3:Type})"
+      "${1:result} = ai.classify(${2:input}, as: ${3:Type}) ?? ${4:Type.default}"
     ],
     "description": "Classify a value into an enum type"
   },
-  "Ai.summarize": {
+  "ai.summarize": {
     "prefix": "summarize",
     "body": [
-      "${1:summary} = Ai.summarize(${2:text})"
+      "${1:summary} = ai.summarize(${2:text})"
     ],
     "description": "Summarize text with the LLM"
   },
-  "Schedule.every": {
+  "ai.prompt": {
+    "prefix": "prompt",
+    "body": [
+      "${1:answer} = ai.prompt(system: \"${2:You are concise.}\", user: ${3:question}) ?? \"${4:no answer}\""
+    ],
+    "description": "Free-form LLM prompt"
+  },
+  "schedule.every": {
     "prefix": "every",
     "body": [
-      "Schedule.every(${1:1}.${2:hours}, () => {",
+      "schedule.every(${1:1}.${2:hours}, () => {",
       "  $0",
       "})"
     ],
     "description": "Recurring schedule"
   },
-  "Schedule.cron": {
+  "schedule.cron": {
     "prefix": "cron",
     "body": [
-      "Schedule.cron(\"${1:0 9 * * 1-5}\", () => {",
+      "schedule.cron(\"${1:0 9 * * 1-5}\", () => {",
       "  $0",
       "})"
     ],
     "description": "Cron schedule"
+  },
+  "use std module": {
+    "prefix": "use",
+    "body": [
+      "use std/${1:ai}"
+    ],
+    "description": "Import a standard-library module"
+  },
+  "impl block": {
+    "prefix": "impl",
+    "body": [
+      "impl ${1:Interface} for ${2:Type} {",
+      "  task ${3:method}(self, ${4:param}: ${5:str}) -> ${6:str} {",
+      "    $0",
+      "  }",
+      "}"
+    ],
+    "description": "Implement an interface for a type"
+  },
+  "LLM provider": {
+    "prefix": "provider",
+    "body": [
+      "type ${1:MyProvider} {}",
+      "",
+      "impl LlmProvider for ${1:MyProvider} {",
+      "  task complete(self, req: CompletionRequest) -> str {",
+      "    $0",
+      "  }",
+      "}",
+      "",
+      "ai.install(${1:MyProvider})"
+    ],
+    "description": "Author a custom LLM provider"
+  },
+  "while loop": {
+    "prefix": "while",
+    "body": [
+      "while ${1:condition} {",
+      "  $0",
+      "}"
+    ],
+    "description": "while loop"
   },
   "raise": {
     "prefix": "raise",

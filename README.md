@@ -4,7 +4,7 @@ Syntax highlighting, snippets, and language server support for [Keel](https://ke
 
 ## Features
 
-- **Syntax highlighting** — reserved keywords, prelude namespaces (`Ai`, `Io`, `Schedule`, …), attributes (`@on_start`, `@role`, …), duration literals, string interpolation
+- **Syntax highlighting** — reserved keywords, stdlib namespaces (`ai`, `io`, `schedule`, …), built-in verbs (`run`, `send`, …), attributes (`@on_start`, `@role`, `@provider`, …), duration literals, string interpolation
 - **Snippets** — `agent`, `task`, `type`, `interface`, `@on_start`, `when`, `try`, and more
 - **Language server** — diagnostics, go-to-definition, rename (requires `keel` binary on PATH)
 - **Commands** — `Keel: Run File`, `Keel: Check File`, `Keel: Lint File`, `Keel: Format File`
